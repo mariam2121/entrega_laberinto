@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="lab.css">
+    <title>Document</title>
+</head>
+<body>
+    <table>
+        <tbody id="matrizlab">
+        </tbody>
+    </table>
+
+    <script>
+       const  labe = [
+    [ "S" , "." , "#" , "#" , "#"],
+    [ "#" , "." , "#" , "#" , "G"],
+    [ "." , "." , "." , "#" , "."],
+    [ "." , "#" , "." , "." , "."],
+    [ "." , "#" , "." , "#" , "."]
+
+]
+
+
+function maze(labe, x, y) {
+    // Verificar si las coordenadas están fuera de los límites del laberinto
+    if (x < 0 || y < 0 || x >= labe.length || y >= labe[0].length) {
+        return false;
+    }
+
+    let LugarActual = labe[x][y];
+    
+    // Verificar si la celda actual es un obstáculo ('#' o '+')
+    if ( LugarActual == '#' || LugarActual == '+') {
+        return false;
+    }
+
+    // Verificar si la celda actual es el objetivo ('G')
+    if (LugarActual == 'G') {
+        return true;
+    }
+    // Marcar la celda actual como visitada ('+')
+    labe[x][y] = '+';
+
+    // Realizar una búsqueda recursiva en las cuatro direcciones posibles
+    if (maze(labe, x, y - 1) )return true;
+    if (maze(labe, x - 1, y)) return true; 
+    if(maze(labe, x, y + 1)) return true; 
+    if(maze(labe, x + 1, y)) return true;
+    // Si no se encuentra una ruta válida, marcar la celda como no visitada ('.')
+    labe[x][y] = '.';
+    
+    return false;
+}
+
+// Iterar a través del laberinto para encontrar la posición de inicio 'S'
+for (let i = 0; i < labe.length; i++) {
+    for (let j = 0; j < labe[0].length; j++) {
+        if (labe[i][j] === 'S') {
+            // Llamar a la función para buscar una ruta desde 'S'
+            if (maze(labe, i, j)) {
+            }
+        }
+    }
+}
+
+var laberinto = document.getElementById('matrizlab');
+
+for (var i = 0; i < labe.length; i++) {
+    var fila = document.createElement('tr');
+    for (var j = 0; j < labe[i].length; j++) {
+        var LugarActual = document.createElement('td');
+        LugarActual.setAttribute('HOLA', labe[i][j]);
+        LugarActual.textContent = labe[i][j];
+        fila.appendChild(LugarActual);
+    }
+    laberinto.appendChild(fila);
+}
+
+    </script>
+</body>
+</html>
